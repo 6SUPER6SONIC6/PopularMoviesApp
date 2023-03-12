@@ -24,23 +24,14 @@ public class MovieActivity extends AppCompatActivity {
 
         activityMovieBinding = DataBindingUtil.setContentView(this, R.layout.activity_movie);
 
-        TextView title = findViewById(R.id.movieTitleTextView);
         Intent intent = getIntent();
 
         if (intent != null && intent.hasExtra("result")){
 
             Result result = intent.getParcelableExtra("result");
 
-            activityMovieBinding.setResult(result);
-
             setTitle(result.getTitle());
-
-            if (result.getTitle().equals(result.getOriginalTitle())){
-                title.setText(result.getTitle());
-            } else {
-                String titleString = result.getTitle() + "\n" + "(" + result.getOriginalTitle() + ")";
-                title.setText(titleString);
-            }
+            activityMovieBinding.setResult(result);
 
         }
 

@@ -1,6 +1,7 @@
 package com.supersonic.retrofitmovieapp.viewmodel;
 
 import android.app.Application;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -25,15 +26,16 @@ public class MainActivityViewModel extends AndroidViewModel {
     private LiveData<MovieDataSource> movieDataSourceLiveData;
     private Executor executor;
     private LiveData<PagedList<Result>> pagedListLiveData;
+    MovieDataSourceFactory movieDataSourceFactory;
 
 
-    public MainActivityViewModel(@NonNull Application application) {
+    public MainActivityViewModel(@NonNull Application application, String selectedItem) {
         super(application);
         movieRepository = new MovieRepository(application);
 
         MovieService movieService = RetrofitInstance.getService();
         MovieDataSourceFactory movieDataSourceFactory =
-                new MovieDataSourceFactory(application, movieService);
+                new MovieDataSourceFactory(application, movieService, selectedItem);
 
         movieDataSourceLiveData = movieDataSourceFactory.getMutableLiveData();
 
